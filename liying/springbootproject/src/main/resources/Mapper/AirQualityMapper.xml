@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.springclass.demos.web.mapper.AirQualityMapper">
+
+    <select id="getCityRanking" resultType="org.example.springclass.demos.web.pojo.CityRankDTO">
+        SELECT city, ROUND(AVG(`value`), 1) as avgAqi
+        FROM air_quality
+        WHERE `type` = 'AQI'
+        GROUP BY city
+        ORDER BY avgAqi DESC
+    </select>
+
+    <select id="getGoodRatio" resultType="org.example.springclass.demos.web.pojo.CityRankDTO">
+        SELECT city,
+               SUM(CASE WHEN `value` &lt;= 100 THEN 1 ELSE 0 END) as goodHours,
+               ROUND(SUM(CASE WHEN `value` &lt;= 100 THEN 1 ELSE 0 END) / COUNT(*) * 100, 1) as goodRatio
+        FROM air_quality
+        WHERE `type` = 'AQI'
+        GROUP BY city
+    </select>
+
+    <select id="getCityTrend" resultType="org.example.springclass.demos.web.pojo.AirQuality">
+        SELECT `time`, `value`
+        FROM air_quality
+        WHERE `type` = 'AQI' AND city = #{city}
+        ORDER BY `time` ASC
+    </select>
+
+    <select id="getMultiCityTrend" resultType="org.example.springclass.demos.web.pojo.AirQuality">
+        SELECT `time`, city, `value`
+        FROM air_quality
+        WHERE `type` = 'AQI' AND city IN
+        <foreach collection="cities" item="c" open="(" separator="," close=")">
+            #{c}
+        </foreach>
+        ORDER BY `time` ASC
+    </select>
+
+    <select id="getPollutantRadar" resultType="org.example.springclass.demos.web.pojo.CityRankDTO">
+        SELECT `type` as city, ROUND(AVG(`value`), 1) as avgAqi
+        FROM air_quality
+        WHERE city = #{city}
+        GROUP BY `type`
+    </select>
+</mapper>
