@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3ab84c1c-8f5a-41a9-b59c-8a3fd41be536" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="spring-beans.schema" />
+        <option value="Thymeleaf" />
+        <option value="Mapper" />
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="3JP4MwMqcaeZqBumk9x2QxbnA4T" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JUnit.SpringclassApplicationTests.teatMethodName.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SpringclassApplicationTests.test3.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SpringclassApplicationTests.test4.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript 调试.products.html.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.springclass [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.springclass [org.mybatis.generator:mybatis-generator-maven-plugin:1.4.0:generate].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.SpringclassApplication.executor&quot;: &quot;Run&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;fileTemplates&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\SpringBoot\springclass\src\main\resources\static" />
+      <recent name="D:\SpringBoot\springclass\src\main\resources\templates\product" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="SpringclassApplicationTests.teatMethodName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="springclass" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.springclass.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.springclass" />
+      <option name="MAIN_CLASS_NAME" value="org.example.springclass.SpringclassApplicationTests" />
+      <option name="METHOD_NAME" value="teatMethodName" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringclassApplicationTests.test3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="springclass" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.springclass.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.springclass" />
+      <option name="MAIN_CLASS_NAME" value="org.example.springclass.SpringclassApplicationTests" />
+      <option name="METHOD_NAME" value="test3" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringclassApplicationTests.test4" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="springclass" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.springclass.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.springclass" />
+      <option name="MAIN_CLASS_NAME" value="org.example.springclass.SpringclassApplicationTests" />
+      <option name="METHOD_NAME" value="test4" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SpringclassApplicationTests.teatMethodName" />
+        <item itemvalue="JUnit.SpringclassApplicationTests.test4" />
+        <item itemvalue="JUnit.SpringclassApplicationTests.test3" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3ab84c1c-8f5a-41a9-b59c-8a3fd41be536" name="Changes" comment="" />
+      <created>1789549325006</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1789549325006</updated>
+      <workItem from="1789549326175" duration="1084000" />
+      <workItem from="1789625851113" duration="5000" />
+      <workItem from="1790144087850" duration="2122000" />
+      <workItem from="1790146239315" duration="9174000" />
+      <workItem from="1790225821586" duration="14000" />
+      <workItem from="1791612251011" duration="3102000" />
+      <workItem from="1791879648159" duration="208000" />
+      <workItem from="1791959484186" duration="8630000" />
+      <workItem from="1792052239162" duration="8000" />
+      <workItem from="1792570160445" duration="4636000" />
+      <workItem from="1792580083436" duration="7218000" />
+      <workItem from="1792649033734" duration="157000" />
+      <workItem from="1792659147684" duration="157000" />
+      <workItem from="1792659317522" duration="182000" />
+      <workItem from="1792659513810" duration="64000" />
+      <workItem from="1792841133296" duration="682000" />
+      <workItem from="1793174900585" duration="4355000" />
+      <workItem from="1793261390686" duration="15000" />
+      <workItem from="1793603156184" duration="5657000" />
+      <workItem from="1793613753090" duration="4647000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
