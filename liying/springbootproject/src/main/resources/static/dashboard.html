@@ -104,17 +104,26 @@
 <body>
 <div class="header">多城市空气质量动态分析大屏</div>
 
-<!-- 第一行：中国地图 -->
+<!-- 第一行：左侧地图 + 右侧桑基图 -->
 <div class="row">
-  <div class="chart-card" style="flex: 1; height: 560px;">
+  <!-- 左侧地图 (占 6 份) -->
+  <div class="chart-card" style="flex: 6; height: 560px;">
     <div class="card-header">
       <div class="card-title">21 城市空气质量地图分布</div>
-      <span style="font-size:12px; color:#88c0d0;">颜色越深 AQI 越高，滚轮可缩放地图</span>
+      <span style="font-size:12px; color:#88c0d0;">滚轮可缩放地图</span>
     </div>
     <div id="mapChart" class="chart-container"></div>
   </div>
+
+  <!-- 右侧桑基图 (占 4 份) -->
+  <div class="chart-card" style="flex: 4; height: 560px;">
+    <div class="card-header">
+      <div class="card-title">污染等级时空迁移流</div>
+      <span style="font-size:12px; color:#88c0d0;">00:00 ➔ 12:00 ➔ 23:00</span>
+    </div>
+    <div id="sankeyChart" class="chart-container"></div>
+  </div>
 </div>
-<div class="container">
 
   <div class="row">
     <!-- 排名图 -->
@@ -181,6 +190,7 @@
 <script>
   // ================== 全局变量与初始化 ==================
   var mapChart = echarts.init(document.getElementById('mapChart'));
+  var sankeyChart = echarts.init(document.getElementById('sankeyChart')); // 新增
   var rankChart = echarts.init(document.getElementById('rankChart'));
   var trendChart = echarts.init(document.getElementById('trendChart'));
   var radarChart = echarts.init(document.getElementById('radarChart'));
@@ -194,6 +204,7 @@
   var chinaMapRegistered = false;
   var globalCityList = [];
   var defaultTrendSelected = {};
+
 
   // 21 个城市经纬度，用于地图打点
   var cityCoord = {
@@ -242,6 +253,7 @@
       var trendData = res.data;
       renderTrendChart(trendData, data.cityList);
       renderLevelChart(trendData);
+      renderSankeyChart(trendData);
     });
 
     // 6. 渲染嵌套饼图
@@ -302,6 +314,139 @@
     }).catch(function (err) {
       console.error('中国地图数据加载失败，请确认 china.json 是否在页面同目录', err);
     });
+  }
+  // ================== 右侧：污染等级迁移流（桑基图） ==================
+  function renderSankeyChart(trendData) {
+    // 提取关键时间点
+    var timePoints = ['00:00', '12:00', '23:00'];
+    var cityLevels = {}; // 记录每个城市在这三个时间点的等级
+
+    // 定义等级划分与颜色
+    var levelDefs = [
+      { name: '优(≤50)', max: 50, color: '#00ff88' },
+      { name: '良(51-100)', max: 100, color: '#ffb703' },
+      { name: '轻度(101-150)', max: 150, color: '#ff9800' },
+      { name: '中度(151-200)', max: 200, color: '#ff4d4d' },
+      { name: '重度(>200)', max: 9999, color: '#a20b0b' }
+    ];
+
+    function getLevel(aqi) {
+      for (var i = 0; i < levelDefs.length; i++) {
+        if (aqi <= levelDefs[i].max) return levelDefs[i].name;
+      }
+      return '重度(>200)';
+    }
+
+    // 1. 整理各城市在关键时间点的等级
+    trendData.forEach(function (item) {
+      var timeStr = item.time.substring(11, 16);
+      if (timePoints.includes(timeStr)) {
+        if (!cityLevels[item.city]) cityLevels[item.city] = {};
+        cityLevels[item.city][timeStr] = getLevel(item.value);
+      }
+    });
+
+    // 2. 构建桑基图所需的 节点(Nodes) 和 连线(Links)
+    var nodesMap = {}; // 用于去重
+    var linksMap = {}; // 用于累计连线数量
+
+    // 生成带时间前缀的节点名，如 "00:00-良(51-100)"
+    function createNodeName(time, levelName) {
+      return time + '-' + levelName;
+    }
+
+    Object.keys(cityLevels).forEach(function (city) {
+      var levels = cityLevels[city];
+      for (var i = 0; i < timePoints.length - 1; i++) {
+        var sourceTime = timePoints[i];
+        var targetTime = timePoints[i + 1];
+        var sourceLevel = levels[sourceTime];
+        var targetLevel = levels[targetTime];
+
+        if (sourceLevel && targetLevel) {
+          var sourceName = createNodeName(sourceTime, sourceLevel);
+          var targetName = createNodeName(targetTime, targetLevel);
+          var linkKey = sourceName + '->' + targetName;
+
+          // 记录节点
+          nodesMap[sourceName] = true;
+          nodesMap[targetName] = true;
+
+          // 统计连线频次
+          if (!linksMap[linkKey]) {
+            linksMap[linkKey] = { source: sourceName, target: targetName, value: 0 };
+          }
+          linksMap[linkKey].value += 1; // 每有一个城市发生该迁移，权重+1
+        }
+      }
+    });
+
+    // 转换为 ECharts 需要的数组格式
+    var nodes = Object.keys(nodesMap).map(function (name) {
+      // 根据名字中的等级赋予颜色
+      var levelDef = levelDefs.find(function (d) { return name.includes(d.name); });
+      return {
+        name: name,
+        itemStyle: { color: levelDef ? levelDef.color : '#00d2ff' }
+      };
+    });
+
+    var links = Object.values(linksMap);
+
+    // 3. ECharts 配置项
+    var option = {
+      tooltip: {
+        trigger: 'item',
+        triggerOn: 'mousemove',
+        formatter: function (params) {
+          if (params.dataType === 'edge') {
+            // 针对连线的 Tooltip
+            return params.data.source.split('-')[0] + ' ➔ ' + params.data.target.split('-')[0] +
+                    '<br/>迁移城市数量：<strong style="color:#00d2ff">' + params.data.value + '</strong> 个';
+          } else {
+            // 针对节点的 Tooltip
+            return params.name + '<br/>城市数量：<strong>' + params.value || 0 + '</strong> 个';
+          }
+        }
+      },
+      series: [
+        {
+          type: 'sankey',
+          layout: 'none', // 使用自定义坐标系
+          left: '5%',
+          right: '15%', // 右侧留点空间给标签
+          top: '5%',
+          bottom: '5%',
+          nodeWidth: 15, // 节点宽度
+          nodeGap: 12, // 节点间距
+          draggable: false, // 禁用拖拽
+          focusNodeAdjacency: 'allEdges', // 鼠标悬浮时高亮关联路径
+          label: {
+            color: '#fff',
+            fontSize: 12,
+            formatter: function (params) {
+              // 图例上只显示等级名称，去掉时间前缀以防太拥挤
+              return params.name.split('-')[1];
+            }
+          },
+          lineStyle: {
+            color: 'gradient', // 连线颜色渐变
+            curveness: 0.5, // 连线弯曲度
+            opacity: 0.3
+          },
+          data: nodes,
+          links: links,
+          // 强制排序，让时间轴从左到右排列
+          levels: [
+            { depth: 0, itemStyle: { color: '#1a3652' } }, // 控制层级
+            { depth: 1, itemStyle: { color: '#1a3652' } },
+            { depth: 2, itemStyle: { color: '#1a3652' } }
+          ]
+        }
+      ]
+    };
+
+    sankeyChart.setOption(option);
   }
 
   function buildMapOption(mapData) {
